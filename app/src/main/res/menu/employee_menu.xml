@@ -17,8 +17,12 @@
 
         <item
             android:id="@+id/your_offers"
-            android:title="Your Offers"
+            android:title="Your Jobs"
             android:icon="@drawable/baseline_job_offer_24" />
+        <item
+            android:id="@+id/jobs_done"
+            android:title="Done Jobs"
+            android:icon="@drawable/check_all" />
 
 
     </group>

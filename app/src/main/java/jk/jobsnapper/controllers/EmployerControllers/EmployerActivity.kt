@@ -12,7 +12,7 @@ import com.google.android.material.navigation.NavigationView
 import jk.jobsnapper.R
 import jk.jobsnapper.databinding.ActivityEmployerBinding
 
-class EmployerActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
+class EmployerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
     private  lateinit var fragmentManager: FragmentManager
     private lateinit var binding: ActivityEmployerBinding
     override fun onCreate(savedInstanceState: Bundle?) {
