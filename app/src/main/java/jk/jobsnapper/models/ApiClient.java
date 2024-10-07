@@ -57,6 +57,7 @@ public class ApiClient {
     }
 
     public String login(LoginRequest loginRequest) throws IOException, InterruptedException {
+        System.out.println("Wysyłanie żądania logowania: " + loginRequest);
         Call<ResponseBody> call = api.login(loginRequest);
 
         Response<ResponseBody> response = call.execute();
@@ -65,6 +66,7 @@ public class ApiClient {
             assert response.body() != null;
             String jwt = response.body().string();
             System.out.println(response.body().string());
+            System.out.println("Odpowiedź serwera: " + jwt);
             System.out.println("Zalogowano pomyślnie. JWT: " + jwt);
             return jwt;
         } else {

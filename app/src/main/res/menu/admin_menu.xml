@@ -1,4 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/job_offers"
+            android:title="Job Offers"
+            android:icon="@drawable/job_offer" />
+
+        <item
+            android:id="@+id/users"
+            android:title="Users"
+            android:icon="@drawable/account_group" />
+
+        <item
+            android:id="@+id/reported_bugs"
+            android:title="Reported Bugs"
+            android:icon="@drawable/baseline_bug_report_24" />
+
+    </group>
+
+    <group  android:checkableBehavior="single"
+        android:id="@+id/bottom">
+
+        <item
+            android:id="@+id/profileSettings"
+            android:title="Settings"
+            android:tint="@color/design_default_color_on_primary"
+            android:icon="@drawable/baseline_settings_24" />
+
+        <item
+            android:id="@+id/logout"
+            android:title="Logout"
+            android:tint="@color/design_default_color_on_primary"
+            android:icon="@drawable/outline_arrow_back_24" />
+    </group>
 
 </menu>
