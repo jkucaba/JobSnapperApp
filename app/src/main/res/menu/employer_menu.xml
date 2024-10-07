@@ -6,29 +6,19 @@
     <group
         android:checkableBehavior="single">
         <item
-            android:id="@+id/notifications"
-            android:title="Notifications"
-            android:tint="@color/p3"
-            android:icon="@drawable/baseline_notifications_24" />
+            android:id="@+id/profile_set"
+            android:title="Profile"
+            android:tint="@color/design_default_color_on_primary"
+            android:icon="@drawable/baseline_account_circle_24" />
         <item
-            android:id="@+id/create_shopping_list"
-            android:title="Create shopping list"
-            android:icon="@drawable/baseline_shopping_basket_24" />
+            android:id="@+id/job_offers"
+            android:title="Job Offers"
+            android:icon="@drawable/job_offer" />
 
         <item
-            android:id="@+id/your_shopping_lists"
-            android:title="Your shopping lists"
-            android:icon="@drawable/baseline_shopping_cart_checkout_24" />
-
-        <item
-            android:id="@+id/add_friend"
-            android:title="Add friend"
-            android:icon="@drawable/baseline_add_reaction_24" />
-
-        <item
-            android:id="@+id/friend_list"
-            android:title="Friend list"
-            android:icon="@drawable/outline_assignment_ind_24" />
+            android:id="@+id/your_offers"
+            android:title="Your Offers"
+            android:icon="@drawable/baseline_job_offer_24" />
 
 
     </group>
@@ -39,19 +29,19 @@
         <item
             android:id="@+id/profileSettings"
             android:title="Settings"
-            android:tint="@color/p3"
+            android:tint="@color/design_default_color_on_primary"
             android:icon="@drawable/baseline_settings_24" />
 
         <item
             android:id="@+id/report"
             android:title="Send report"
-            android:tint="@color/p3"
+            android:tint="@color/design_default_color_on_primary"
             android:icon="@drawable/baseline_bug_report_24" />
 
         <item
             android:id="@+id/logout"
             android:title="Logout"
-            android:tint="@color/light_green"
+            android:tint="@color/design_default_color_on_primary"
             android:icon="@drawable/outline_arrow_back_24" />
     </group>
 
