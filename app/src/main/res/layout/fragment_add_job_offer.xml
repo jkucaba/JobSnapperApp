@@ -1,15 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.EmployerControllers.AddJobOfferFragment">
+    android:padding="16dp">
 
-
-    <TextView
+    <LinearLayout
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Add job offer fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
 
-</FrameLayout>
+        <!-- Tytuł -->
+        <EditText
+            android:id="@+id/jobTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Job Title"
+            android:inputType="text" />
+
+        <!-- Opis -->
+        <EditText
+            android:id="@+id/jobDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:inputType="textMultiLine" />
+
+        <!-- Lokalizacja (z przyciskiem wyboru lokalizacji) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/jobLocation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/locationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Location" />
+        </LinearLayout>
+
+        <!-- Data rozpoczęcia (z przyciskiem wyboru daty) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/startDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Start Date"
+                android:inputType="date" />
+
+            <Button
+                android:id="@+id/startDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Date" />
+        </LinearLayout>
+
+        <!-- Data zakończenia (z przyciskiem wyboru daty) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/endDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="End Date"
+                android:inputType="date" />
+
+            <Button
+                android:id="@+id/endDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pick Date" />
+        </LinearLayout>
+
+        <!-- Liczba potrzebnych osób -->
+        <EditText
+            android:id="@+id/peopleRequired"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="People Required"
+            android:inputType="number" />
+
+        <!-- Wynagrodzenie -->
+        <EditText
+            android:id="@+id/salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Salary"
+            android:inputType="numberDecimal" />
+
+        <!-- Rodzaj pracy (Spinner) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Type" />
+
+        <Spinner
+            android:id="@+id/jobTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/job_types" />
+
+        <!-- Kategoria pracy (Spinner) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Category" />
+
+        <Spinner
+            android:id="@+id/jobCategorySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/job_categories" />
+
+        <!-- Status pracy (Spinner) -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Job Status" />
+
+        <Spinner
+            android:id="@+id/jobStatusSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/job_statuses" />
+
+
+        <!-- Przycisk zapisania -->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+
+    </LinearLayout>
+</ScrollView>
