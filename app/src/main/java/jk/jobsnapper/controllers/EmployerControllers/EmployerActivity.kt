@@ -34,6 +34,7 @@ class EmployerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         when(item.itemId){
             R.id.profile_set->{}
             R.id.job_offers->{}
+            R.id.add_offer->{openFragment(AddJobOfferFragment())}
             R.id.your_offers->{}
             R.id.profileSettings->{}
             R.id.report->{}

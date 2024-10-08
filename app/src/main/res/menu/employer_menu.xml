@@ -14,7 +14,10 @@
             android:id="@+id/job_offers"
             android:title="Job Offers"
             android:icon="@drawable/job_offer" />
-
+        <item
+            android:id="@+id/add_offer"
+            android:title="Add Job Offer"
+            android:icon="@drawable/sticker_plus" />
         <item
             android:id="@+id/your_offers"
             android:title="Your Offers"
