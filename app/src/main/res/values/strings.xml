@@ -10,21 +10,5 @@
     <string name="nav_close">Close menu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string-array name="job_types">
-        <item>Full-Time</item>
-        <item>Part-Time</item>
-        <item>Contract</item>
-    </string-array>
 
-    <string-array name="job_categories">
-        <item>IT</item>
-        <item>Healthcare</item>
-        <item>Engineering</item>
-    </string-array>
-
-    <string-array name="job_statuses">
-        <item>Open</item>
-        <item>Closed</item>
-        <item>Pending</item>
-    </string-array>
 </resources>
