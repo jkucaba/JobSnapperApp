@@ -5,18 +5,26 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Display.Mode
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import jk.jobsnapper.R
 import jk.jobsnapper.databinding.FragmentAddJobOfferBinding
+import jk.jobsnapper.models.ApiClient
+import jk.jobsnapper.models.JobOffer
+import jk.jobsnapper.models.Model
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.Calendar
@@ -45,6 +53,10 @@ class AddJobOfferFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentAddJobOfferBinding.inflate(inflater, container, false)
+        // Get the user details from the token
+        val idUser = Model.getInstanceWC().user.iduser
+        val firstName = Model.getInstanceWC().user.firstName
+        val lastName = Model.getInstanceWC().user.lastName
 
         val apiKey = getPlacesApiKey()
         if (apiKey != null) {
@@ -170,6 +182,65 @@ class AddJobOfferFragment : Fragment() {
             false
         }
         binding.expandableListView.setAdapter(adapter)
+
+
+        println("TOKEN" + Model.getInstanceWC().token)
+        binding.submitButton.setOnClickListener {
+            runBlocking {
+                withContext(Dispatchers.IO) {
+                    val jobTitle = binding.jobTitle.text.toString().trim()
+                    val jobDescription = binding.jobDescription.text.toString().trim()
+                    val startDate = binding.startDate.text.toString().trim()
+                    val endDate = binding.endDate.text.toString().trim()
+                    val jobLocation = binding.jobLocation.text.toString().trim()
+                    val peopleRequired = binding.peopleRequired.text.toString().toInt()
+                    val salary = binding.salary.text.toString()
+                    val phoneNumber = binding.phone.text.toString().toInt()
+                    val jobCategory = binding.selectedCategory.text.toString()
+                    val date = Calendar.getInstance().time.toString()
+                    if (jobTitle.isEmpty() || jobDescription.isEmpty() || startDate.isEmpty() ||
+                        endDate.isEmpty() || jobLocation.isEmpty() || peopleRequired == null ||
+                        salary.isEmpty() || phoneNumber == null) {
+                        Toast.makeText(requireContext(), "Proszę wypełnić wszystkie pola", Toast.LENGTH_SHORT).show()
+                    }
+
+
+
+                    if (idUser != null && firstName != null && lastName != null) {
+                        // Create a new JobOffer instance
+                        val jobOffer = JobOffer(
+                            null,
+                            idUser.toLong(),
+                            jobTitle,
+                            jobDescription,
+                            jobLocation,
+                            startDate,
+                            endDate,
+                            peopleRequired,
+                            salary,
+                            phoneNumber,
+                            jobCategory,
+                            "Pending",
+                            "$firstName $lastName",
+                             date
+                        )
+
+                        try {
+                            Model.getInstanceWC().createJobOffer(jobOffer)
+                            Log.d("AddJobOfferFragment", "Job offer created successfully")
+                        } catch (e: Exception) {
+                            Log.e("AddJobOfferFragment", "Failed to create job offer", e)
+                        }
+                    } else {
+                        Log.e("AddJobOfferFragment", "User details are null")
+                    }
+                }
+
+
+
+            }
+        }
+
         return binding.root
     }
 

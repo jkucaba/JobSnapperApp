@@ -2,24 +2,26 @@ package jk.jobsnapper.models;
 
 public class JobOffer {
     private Long idoffer;
+    private Long idUser;
     private String title;
     private String description;
     private String location;
     private String startDate;
     private String endDate;
     private int peopleRequired;
-    private Double salary;
-    private String jobType;
-    private String jobCategory;
-    private String jobStatus;
-    private String jobPostedBy;
-    private String jobPostedDate;
+    private String salary;
+    private int phoneNumber;
+    private String category;
+    private String status;
+    private String postedBy;
+    private String postedDate;
 
-    public JobOffer(Long idoffer, String title, String description, String location,
-                    String startDate, String endDate, int peopleRequired, Double salary,
-                    String jobType, String jobCategory, String jobStatus, String jobPostedBy,
+    public JobOffer(Long idoffer, Long idUser, String title, String description, String location,
+                    String startDate, String endDate, int peopleRequired, String salary,
+                    int phone, String jobCategory, String jobStatus, String jobPostedBy,
                     String jobPostedDate) {
         this.idoffer = idoffer;
+        this.idUser = idUser;
         this.title = title;
         this.description = description;
         this.location = location;
@@ -27,11 +29,11 @@ public class JobOffer {
         this.endDate = endDate;
         this.peopleRequired = peopleRequired;
         this.salary = salary;
-        this.jobType = jobType;
-        this.jobCategory = jobCategory;
-        this.jobStatus = jobStatus;
-        this.jobPostedBy = jobPostedBy;
-        this.jobPostedDate = jobPostedDate;
+        this.phoneNumber = phone;
+        this.category = jobCategory;
+        this.status = jobStatus;
+        this.postedBy = jobPostedBy;
+        this.postedDate = jobPostedDate;
     }
 
     public Long getIdoffer() {
@@ -40,6 +42,14 @@ public class JobOffer {
 
     public void setIdoffer(Long idoffer) {
         this.idoffer = idoffer;
+    }
+
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
     public String getTitle() {
@@ -90,51 +100,71 @@ public class JobOffer {
         this.peopleRequired = peopleRequired;
     }
 
-    public Double getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(Double salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
-    public String getJobType() {
-        return jobType;
+    public int getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
+    public void setPhoneNumber(int phone) {
+        this.phoneNumber = phone;
     }
 
-    public String getJobCategory() {
-        return jobCategory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setJobCategory(String jobCategory) {
-        this.jobCategory = jobCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getJobStatus() {
-        return jobStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setJobStatus(String jobStatus) {
-        this.jobStatus = jobStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getJobPostedBy() {
-        return jobPostedBy;
+    public String getPostedBy() {
+        return postedBy;
     }
 
-    public void setJobPostedBy(String jobPostedBy) {
-        this.jobPostedBy = jobPostedBy;
+    public void setPostedBy(String postedBy) {
+        this.postedBy = postedBy;
     }
 
-    public String getJobPostedDate() {
-        return jobPostedDate;
+    public String getPostedDate() {
+        return postedDate;
     }
 
-    public void setJobPostedDate(String jobPostedDate) {
-        this.jobPostedDate = jobPostedDate;
+    public void setPostedDate(String postedDate) {
+        this.postedDate = postedDate;
+    }
+
+    @Override
+    public String toString() {
+        return "JobOffer{" +
+                "idoffer=" + idoffer +
+                ", idUser=" + idUser +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", peopleRequired=" + peopleRequired +
+                ", salary='" + salary + '\'' +
+                ", phone=" + phoneNumber +
+                ", category='" + category + '\'' +
+                ", status='" + status + '\'' +
+                ", postedBy='" + postedBy + '\'' +
+                ", postedDate='" + postedDate + '\'' +
+                '}';
     }
 }

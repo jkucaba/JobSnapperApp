@@ -12,6 +12,8 @@ import jk.jobsnapper.controllers.EmployerControllers.EmployerActivity
 import jk.jobsnapper.databinding.ActivityMainBinding
 import jk.jobsnapper.models.ApiClient
 import jk.jobsnapper.models.LoginRequest
+import jk.jobsnapper.models.Model
+import jk.jobsnapper.models.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +37,14 @@ class MainActivity : AppCompatActivity() {
 
         apiClient = ApiClient()
 
+        Thread {
+            try {
+                Model.getInstance(this)
+            } catch (ex: Exception) {
+                ex.printStackTrace()
+            }
+        }.start()
+
         binding.login.setOnClickListener { view ->
             login(view)
         }
@@ -48,12 +58,23 @@ class MainActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val jwt = apiClient.login(loginRequest)
+                Model.getInstanceWC().token = jwt
                 apiClient.getPublicKey()
                 withContext(Dispatchers.Main) {
                     apiClient.setToken(jwt)
                     Toast.makeText(this@MainActivity, "Zalogowano pomyślnie", Toast.LENGTH_SHORT)
                         .show()
                     val role = apiClient.getUserRoleFromToken(jwt)
+                    val idUser = apiClient.getIdUserFromToken(jwt)
+                    val firstName = apiClient.getFirstNameFromToken(jwt)
+                    val lastName = apiClient.getLastNameFromToken(jwt)
+                    val email = apiClient.getEmailFromToken(jwt)
+                    val birthDate = apiClient.getBirthDateFromToken(jwt)
+
+                    val user = User(idUser, firstName, lastName, email, birthDate, role)
+
+                    Model.getInstanceWC().user = user
+
                     when (role) {
                         "admin" -> startActivity(Intent(this@MainActivity, AdminActivity::class.java))
                         "pracownik" -> startActivity(Intent(this@MainActivity, EmployeeActivity::class.java))
