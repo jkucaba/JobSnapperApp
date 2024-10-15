@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/item_reserved_cell_background2">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Tytuł ogłoszenia"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/locationTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:text="Lokalizacja"
+        android:padding="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/beginDateIcn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/calendar_start" />
+        <TextView
+            android:id="@+id/startDateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:text="Data początku" />
+        <ImageView
+            android:id="@+id/endDateIcn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/calendar_end" />
+        <TextView
+            android:id="@+id/endDateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:text="Data końca" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+        <ImageView
+            android:id="@+id/moneyIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/currency_usd" />
+        <TextView
+            android:id="@+id/salaryTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:text="Zarobki" />
+        <ImageView
+            android:id="@+id/numberIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/cellphone" />
+        <TextView
+            android:id="@+id/phoneTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14sp"
+            android:text="Numer telefonu" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/personIcon1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/account" />
+
+            <ImageView
+                android:id="@+id/personIcon2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/account" />
+
+            <ImageView
+                android:id="@+id/personIcon3"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/account" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/detailsButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/magnify_expand"
+            android:background="@drawable/submit_button_background"
+            android:drawablePadding="8dp"
+            android:padding="8dp" />
+    </LinearLayout>
+</LinearLayout>
