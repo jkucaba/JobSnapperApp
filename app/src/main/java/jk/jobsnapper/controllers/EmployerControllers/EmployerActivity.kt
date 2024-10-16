@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.navigation.NavigationView
 import jk.jobsnapper.R
+import jk.jobsnapper.controllers.UtilControllers.JobOffersListFragment
 import jk.jobsnapper.databinding.ActivityEmployerBinding
 
 class EmployerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
@@ -33,7 +34,9 @@ class EmployerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.profile_set->{}
-            R.id.job_offers->{}
+            R.id.job_offers->{
+                openFragment(JobOffersListFragment())
+            }
             R.id.add_offer->{
                 openFragment(AddJobOfferFragment())}
             R.id.your_offers->{}

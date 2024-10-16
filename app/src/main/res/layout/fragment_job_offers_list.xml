@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+
+tools:context=".controllers.UtilControllers.JobOffersListFragment"
+android:layout_marginTop="60dp">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="JobOffers"
+        android:id="@+id/text2"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center"
+        android:padding="10dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Customize your search:"
+        android:id="@+id/text3"
+        android:textSize="13sp"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/text2"
+        android:gravity="center"
+        android:padding="5dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/locationSB"
+        app:layout_constraintTop_toBottomOf="@+id/text3"
+        >
+
+        <TextView
+            android:id="@+id/jobLocation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Location"
+            android:background="?android:attr/editTextBackground"
+            android:textColorHint="#808080"
+            android:layout_marginStart="0dp"
+            android:textSize="13sp" />
+
+        <ImageButton
+            android:id="@+id/location_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_add_location_alt_24"
+            android:background="@drawable/button_background2"
+            android:drawablePadding="8dp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/startDateSB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/locationSB"
+        >
+
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="Start Date"
+            android:background="?android:attr/editTextBackground"
+            android:textColorHint="#808080"
+            android:layout_marginStart="0dp"
+            android:textSize="13sp" />
+
+        <ImageButton
+            android:id="@+id/start_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_edit_calendar_24"
+            android:background="@drawable/button_background2"
+            android:drawablePadding="8dp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/endDateSB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/startDateSB"
+        >
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="End Date"
+            android:background="?android:attr/editTextBackground"
+            android:textColorHint="#808080"
+            android:layout_marginStart="0dp"
+            android:textSize="13sp" />
+
+        <ImageButton
+            android:id="@+id/end_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/baseline_edit_calendar_24"
+            android:background="@drawable/button_background2"
+            android:drawablePadding="8dp"
+            android:padding="8dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ExLV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/endDateSB"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/selectedCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose a Category"
+            android:textSize="13sp"
+            android:gravity="center"
+         />
+         <ExpandableListView
+            android:id="@+id/expandableListView"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+             android:scrollbarSize="12dp"
+            android:padding="5dp"
+            android:layout_marginBottom="5dp"
+            />
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@drawable/submit_button_background"
+            android:textColor="#FFFFFF"
+            android:text="Search"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/ExLV"
+        android:background="@drawable/recyclerdraw"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

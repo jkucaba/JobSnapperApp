@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Model {
     private static Model model;
@@ -12,6 +13,8 @@ public class Model {
 
     private JobOffer currentJobOffer;
     private String token;
+
+    ArrayList<JobOffer> jobOffers;
 
     private Model(Context context) throws SQLException {
         this.apiClient = new ApiClient();
@@ -57,6 +60,10 @@ public class Model {
 
     public void setCurrentJobOffer(JobOffer currentJobOffer) {
         this.currentJobOffer = currentJobOffer;
+    }
+    public ArrayList<JobOffer> getJobOffersL() throws IOException, InterruptedException {
+        jobOffers = apiClient.getJobOffers(token);
+        return jobOffers;
     }
 
 }

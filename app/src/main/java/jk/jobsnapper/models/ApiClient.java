@@ -2,6 +2,9 @@ package jk.jobsnapper.models;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.security.KeyFactory;
@@ -176,5 +179,28 @@ public class ApiClient {
         } else {
             throw new IllegalStateException("Failed to create job offer. HTTP response code: " + response.code());
         }
+    }
+
+    public ArrayList<JobOffer> getJobOffers(String token) throws IOException, InterruptedException {
+        Call<ResponseBody> call = api.getJobOffers(token);
+
+        Response<ResponseBody> response = call.execute();
+
+        if (response.isSuccessful()) {
+            assert response.body() != null;
+            String jsonString = response.body().string();
+
+            Type listType = new TypeToken<ArrayList<JobOffer>>(){}.getType();
+            try {
+                ArrayList<JobOffer> x = getArrayData(listType, jsonString);
+                return x;
+            } catch (JsonSyntaxException e) {
+                System.err.println("Error parsing JSON: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            throw new IllegalStateException("Failed to get job offers. HTTP response code: " + response.code());
+        }
+        return new ArrayList<>();
     }
 }

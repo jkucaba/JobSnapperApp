@@ -1,38 +1,34 @@
-package jk.jobsnapper.controllers.EmployerControllers
+package jk.jobsnapper.controllers.UtilControllers
 
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Display.Mode
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import jk.jobsnapper.R
-import jk.jobsnapper.databinding.FragmentAddJobOfferBinding
-import jk.jobsnapper.models.ApiClient
-import jk.jobsnapper.models.JobOffer
+import jk.jobsnapper.adapters.JobOffersListAdapter
+import jk.jobsnapper.databinding.FragmentJobOffersListBinding
 import jk.jobsnapper.models.Model
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.Calendar
 import java.util.Properties
 
-
-class AddJobOfferFragment : Fragment() {
-    private lateinit var binding : FragmentAddJobOfferBinding
+class JobOffersListFragment : Fragment() {
+    private lateinit var binding: FragmentJobOffersListBinding
     private val PLACE_PICKER_REQUEST = 1
 
     private fun getPlacesApiKey(): String? {
@@ -47,17 +43,83 @@ class AddJobOfferFragment : Fragment() {
         }
         return null
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentAddJobOfferBinding.inflate(inflater, container, false)
-        // Get the user details from the token
-        val idUser = Model.getInstanceWC().user.iduser
-        val firstName = Model.getInstanceWC().user.firstName
-        val lastName = Model.getInstanceWC().user.lastName
+        binding = FragmentJobOffersListBinding.inflate(inflater, container, false)
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                val jobOffers = Model.getInstanceWC().getJobOffersL()
+                activity?.runOnUiThread {
+                    val adapter = JobOffersListAdapter(jobOffers, requireActivity())
+                    binding.recyclerView.adapter = adapter
+                }
+            }
+        }
+        val categories = mapOf(
+            "Prace fizyczne" to listOf("Prace budowlane", "Prace magazynowe", "Przeprowadzki", "Rozładunek i załadunek", "Prace porządkowe", "Pomoc przy remontach", "Ogrodnictwo i prace związane z zielenią", "Pomoc w gospodarstwach rolnych", "Inna"),
+            "Prace biurowe" to listOf("Wprowadzanie danych", "Archiwizacja dokumentów", "Obsługa klienta", "Pomoc w księgowości", "Tłumaczenia","Asystent/ka administracyjna", "Praca zdalna (obsługa korespondencji, planowanie)", "Inna"),
+            "Prace sezonowe" to listOf("Zbiory owoców/warzyw", "Praca na jarmarkach", "Sezonowe prace w kurortach", "Pomoc w eventach", "Inna"),
+            "Usługi domowe" to listOf("Usługi domowe", "Sprzątanie domów i mieszkań", "Opieka nad dziećmi", "Opieka nad osobami starszymi", "Opieka nad zwierzętami", "Pranie i prasowanie","Pomoc przy zakupach i dostarczaniu produktów", "Inna"),
+            "Prace kreatywne i multimedialne" to listOf("Grafika komputerowa", "Tworzenie treści", "Montaż wideo", "Fotografia", "Zarządzanie profilami w social mediach", "Pisanie artykułów", "Projektowanie stron internetowych", "Inna"),
+            "Edukacja i korepetycje" to listOf("Korepetycje z przedmiotów szkolnych", "Kursy językowe", "Treningi sportowe i personalne", "Nauka gry na instrumentach", "Pomoc w przygotowaniu do egzaminów", "Inna"),
+            "Transport i logistyka" to listOf("Kierowca (np. dostawy, transport osób)", "Kurier", "Przeprowadzki", "Pomoc przy pakowaniu") ,
+            "Gastronomia i catering" to listOf("Kelner", "Barman", "Pomoc kuchenna", "Kucharz na eventy", "Roznoszenie ulotek reklamowych, próbek żywności"),
+            "Eventy i promocje" to listOf("Hostessy", "Animatorzy czasu wolnego", "Prace związane z organizacją wydarzeń", "Praca przy stoiskach promocyjnych", "Wolontariat podczas eventów"),
+            "Techniczne i serwisowe" to listOf("Serwis komputerowy", "Naprawy domowe (np. drobne naprawy hydrauliczne, elektryczne)", "Pomoc techniczna (IT, naprawa sprzętu)", "Montaż mebli"),
+            "Inne" to listOf("Inne")
 
+        )
+
+        val adapter = object : BaseExpandableListAdapter() {
+            override fun getGroupCount(): Int = categories.size
+
+            override fun getChildrenCount(groupPosition: Int): Int = categories.values.toList()[groupPosition].size
+
+            override fun getGroup(groupPosition: Int): Any = categories.keys.toList()[groupPosition]
+
+            override fun getChild(groupPosition: Int, childPosition: Int): Any = categories.values.toList()[groupPosition][childPosition]
+
+            override fun getGroupId(groupPosition: Int): Long = groupPosition.toLong()
+
+            override fun getChildId(groupPosition: Int, childPosition: Int): Long = childPosition.toLong()
+
+            override fun hasStableIds(): Boolean = false
+
+            override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
+                val view = convertView ?: layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false)
+                val textView = view.findViewById<TextView>(android.R.id.text1)
+                textView.textSize = 13f
+                textView.height = 30
+                textView.text = getGroup(groupPosition) as String
+                return view
+            }
+
+            override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
+                val view = convertView ?: layoutInflater.inflate(android.R.layout.simple_expandable_list_item_2, parent, false)
+                val textView = view.findViewById<TextView>(android.R.id.text1)
+                textView.textSize = 13f
+                textView.text = getChild(groupPosition, childPosition) as String
+                return view
+            }
+
+            override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean = true
+        }
+
+        binding.expandableListView.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+            val selectedCategory = adapter.getGroup(groupPosition) as String
+            val selectedSubcategory = adapter.getChild(groupPosition, childPosition) as String
+            binding.selectedCategory.text = "$selectedCategory: $selectedSubcategory"
+            true
+        }
+
+        binding.expandableListView.setOnGroupClickListener { parent, v, groupPosition, id ->
+            val selectedCategory = adapter.getGroup(groupPosition) as String
+            binding.selectedCategory.text = selectedCategory
+            false
+        }
+        binding.expandableListView.setAdapter(adapter)
         val apiKey = getPlacesApiKey()
         if (apiKey != null) {
             println("AddJobOfferFragment" + "Initializing Places with API Key")
@@ -119,130 +181,8 @@ class AddJobOfferFragment : Fragment() {
                 }
             }
         }
-
-
-
-        val categories = mapOf(
-            "Prace fizyczne" to listOf("Prace budowlane", "Prace magazynowe", "Przeprowadzki", "Rozładunek i załadunek", "Prace porządkowe", "Pomoc przy remontach", "Ogrodnictwo i prace związane z zielenią", "Pomoc w gospodarstwach rolnych", "Inna"),
-            "Prace biurowe" to listOf("Wprowadzanie danych", "Archiwizacja dokumentów", "Obsługa klienta", "Pomoc w księgowości", "Tłumaczenia","Asystent/ka administracyjna", "Praca zdalna (obsługa korespondencji, planowanie)", "Inna"),
-            "Prace sezonowe" to listOf("Zbiory owoców/warzyw", "Praca na jarmarkach", "Sezonowe prace w kurortach", "Pomoc w eventach", "Inna"),
-            "Usługi domowe" to listOf("Usługi domowe", "Sprzątanie domów i mieszkań", "Opieka nad dziećmi", "Opieka nad osobami starszymi", "Opieka nad zwierzętami", "Pranie i prasowanie","Pomoc przy zakupach i dostarczaniu produktów", "Inna"),
-            "Prace kreatywne i multimedialne" to listOf("Grafika komputerowa", "Tworzenie treści", "Montaż wideo", "Fotografia", "Zarządzanie profilami w social mediach", "Pisanie artykułów", "Projektowanie stron internetowych", "Inna"),
-            "Edukacja i korepetycje" to listOf("Korepetycje z przedmiotów szkolnych", "Kursy językowe", "Treningi sportowe i personalne", "Nauka gry na instrumentach", "Pomoc w przygotowaniu do egzaminów", "Inna"),
-            "Transport i logistyka" to listOf("Kierowca (np. dostawy, transport osób)", "Kurier", "Przeprowadzki", "Pomoc przy pakowaniu") ,
-            "Gastronomia i catering" to listOf("Kelner", "Barman", "Pomoc kuchenna", "Kucharz na eventy", "Roznoszenie ulotek reklamowych, próbek żywności"),
-            "Eventy i promocje" to listOf("Hostessy", "Animatorzy czasu wolnego", "Prace związane z organizacją wydarzeń", "Praca przy stoiskach promocyjnych", "Wolontariat podczas eventów"),
-            "Techniczne i serwisowe" to listOf("Serwis komputerowy", "Naprawy domowe (np. drobne naprawy hydrauliczne, elektryczne)", "Pomoc techniczna (IT, naprawa sprzętu)", "Montaż mebli"),
-            "Inne" to listOf("Inne")
-
-        )
-
-        val adapter = object : BaseExpandableListAdapter() {
-            override fun getGroupCount(): Int = categories.size
-
-            override fun getChildrenCount(groupPosition: Int): Int = categories.values.toList()[groupPosition].size
-
-            override fun getGroup(groupPosition: Int): Any = categories.keys.toList()[groupPosition]
-
-            override fun getChild(groupPosition: Int, childPosition: Int): Any = categories.values.toList()[groupPosition][childPosition]
-
-            override fun getGroupId(groupPosition: Int): Long = groupPosition.toLong()
-
-            override fun getChildId(groupPosition: Int, childPosition: Int): Long = childPosition.toLong()
-
-            override fun hasStableIds(): Boolean = false
-
-            override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
-                val view = convertView ?: layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false)
-                val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.text = getGroup(groupPosition) as String
-                return view
-            }
-
-            override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup?): View {
-                val view = convertView ?: layoutInflater.inflate(android.R.layout.simple_expandable_list_item_2, parent, false)
-                val textView = view.findViewById<TextView>(android.R.id.text1)
-                textView.text = getChild(groupPosition, childPosition) as String
-                return view
-            }
-
-            override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean = true
-        }
-
-        binding.expandableListView.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-            val selectedCategory = adapter.getGroup(groupPosition) as String
-            val selectedSubcategory = adapter.getChild(groupPosition, childPosition) as String
-            binding.selectedCategory.text = "$selectedCategory: $selectedSubcategory"
-            true
-        }
-
-        binding.expandableListView.setOnGroupClickListener { parent, v, groupPosition, id ->
-            val selectedCategory = adapter.getGroup(groupPosition) as String
-            binding.selectedCategory.text = selectedCategory
-            false
-        }
-        binding.expandableListView.setAdapter(adapter)
-
-
-        binding.submitButton.setOnClickListener {
-            runBlocking {
-                withContext(Dispatchers.IO) {
-                    val jobTitle = binding.jobTitle.text.toString().trim()
-                    val jobDescription = binding.jobDescription.text.toString().trim()
-                    val startDate = binding.startDate.text.toString().trim()
-                    val endDate = binding.endDate.text.toString().trim()
-                    val jobLocation = binding.jobLocation.text.toString().trim()
-                    val peopleRequired = binding.peopleRequired.text.toString().toInt()
-                    val salary = binding.salary.text.toString()
-                    val phoneNumber = binding.phone.text.toString().toInt()
-                    val jobCategory = binding.selectedCategory.text.toString()
-                    val date = Calendar.getInstance().time.toString()
-                    if (jobTitle.isEmpty() || jobDescription.isEmpty() || startDate.isEmpty() ||
-                        endDate.isEmpty() || jobLocation.isEmpty() || peopleRequired == null ||
-                        salary.isEmpty() || phoneNumber == null) {
-                        Toast.makeText(requireContext(), "Proszę wypełnić wszystkie pola", Toast.LENGTH_SHORT).show()
-                    }
-
-
-
-                    if (idUser != null && firstName != null && lastName != null) {
-                        // Create a new JobOffer instance
-                        val jobOffer = JobOffer(
-                            null,
-                            idUser.toLong(),
-                            jobTitle,
-                            jobDescription,
-                            jobLocation,
-                            startDate,
-                            endDate,
-                            peopleRequired,
-                            salary,
-                            phoneNumber,
-                            jobCategory,
-                            "Pending",
-                            "$firstName $lastName",
-                             date
-                        )
-
-                        try {
-                            Model.getInstanceWC().createJobOffer(jobOffer)
-                            Log.d("AddJobOfferFragment", "Job offer created successfully")
-                        } catch (e: Exception) {
-                            Log.e("AddJobOfferFragment", "Failed to create job offer", e)
-                        }
-                    } else {
-                        Log.e("AddJobOfferFragment", "User details are null")
-                    }
-                }
-
-
-
-            }
-        }
-
         return binding.root
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -253,6 +193,4 @@ class AddJobOfferFragment : Fragment() {
             }
         }
     }
-
-
 }
