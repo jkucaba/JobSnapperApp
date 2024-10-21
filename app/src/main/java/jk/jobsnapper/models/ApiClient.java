@@ -225,4 +225,27 @@ public class ApiClient {
         }
         return new ArrayList<>();
     }
+
+    public ArrayList<User> getUsers(String token) throws IOException, InterruptedException {
+        Call<ResponseBody> call = api.getUsers(token);
+
+        Response<ResponseBody> response = call.execute();
+
+        if (response.isSuccessful()) {
+            assert response.body() != null;
+            String jsonString = response.body().string();
+
+            Type listType = new TypeToken<ArrayList<User>>(){}.getType();
+            try {
+                ArrayList<User> x = getArrayData(listType, jsonString);
+                return x;
+            } catch (JsonSyntaxException e) {
+                System.err.println("Error parsing JSON: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            throw new IllegalStateException("Failed to get job offers. HTTP response code: " + response.code());
+        }
+        return new ArrayList<>();
+    }
 }

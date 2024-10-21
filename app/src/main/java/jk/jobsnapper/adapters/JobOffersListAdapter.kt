@@ -14,8 +14,8 @@ class JobOffersListAdapter(private val jobOffersList: ArrayList<JobOffer>, priva
     }
 
     override fun onBindViewHolder(holder: JobOffersListViewHolder, position: Int) {
-        val friend = jobOffersList[position]
-        holder.bind(friend)
+        val jobOffers = jobOffersList[position]
+        holder.bind(jobOffers)
     }
 
     override fun getItemCount(): Int {

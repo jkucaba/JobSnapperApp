@@ -21,4 +21,7 @@ public interface Api {
 
     @GET("/employer/joboffers/my/{id}")
     Call<ResponseBody> getJobOffersById(@Header("Authorization") String token, @Path("id") Long id);
+
+    @GET("/admin/users")
+    Call<ResponseBody> getUsers(@Header("Authorization") String token);
 }

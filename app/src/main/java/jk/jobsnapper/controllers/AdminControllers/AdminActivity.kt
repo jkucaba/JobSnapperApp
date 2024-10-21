@@ -31,7 +31,7 @@ class AdminActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.job_offers->{}
-            R.id.users->{}
+            R.id.users->{openFragment(UsersListFragment())}
             R.id.reported_bugs->{}
             R.id.profileSettings->{}
             R.id.logout->finish()

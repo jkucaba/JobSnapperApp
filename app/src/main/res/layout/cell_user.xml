@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_user_cell">
+
+    <ImageView
+        android:id="@+id/workerIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        app:tint="@color/p2"
+        android:src="@drawable/account" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="8dp"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="0.6"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:layout_marginStart="8dp"
+        android:text="name.surname@gmail.com" />
+
+    <ImageView
+        android:id="@+id/detailsIcon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        app:tint="@color/p2"
+        android:src="@drawable/quantum_ic_search_grey600_24" />
+
+</LinearLayout>

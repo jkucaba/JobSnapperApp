@@ -15,6 +15,7 @@ public class Model {
     private String token;
 
     ArrayList<JobOffer> jobOffers;
+    ArrayList<User> users;
 
     private Model(Context context) throws SQLException {
         this.apiClient = new ApiClient();
@@ -68,6 +69,10 @@ public class Model {
     public ArrayList<JobOffer> getYourJobOffersL() throws IOException, InterruptedException {
         jobOffers = apiClient.getYourJobOffers(token, user.getIduser());
         return jobOffers;
+    }
+    public ArrayList<User> getUsersL() throws IOException, InterruptedException {
+        users = apiClient.getUsers(token);
+        return users;
     }
 
 }
