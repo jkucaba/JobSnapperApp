@@ -65,5 +65,9 @@ public class Model {
         jobOffers = apiClient.getJobOffers(token);
         return jobOffers;
     }
+    public ArrayList<JobOffer> getYourJobOffersL() throws IOException, InterruptedException {
+        jobOffers = apiClient.getYourJobOffers(token, user.getIduser());
+        return jobOffers;
+    }
 
 }

@@ -39,7 +39,9 @@ class EmployerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             }
             R.id.add_offer->{
                 openFragment(AddJobOfferFragment())}
-            R.id.your_offers->{}
+            R.id.your_offers->{
+                openFragment(YourJobOffersFragment())
+            }
             R.id.profileSettings->{}
             R.id.report->{}
             R.id.logout->finish()
