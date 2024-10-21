@@ -74,5 +74,8 @@ public class Model {
         users = apiClient.getUsers(token);
         return users;
     }
+    public void deleteUserM(Long id) throws IllegalStateException,IOException {
+        apiClient.deleteUser(token, id);
+    }
 
 }

@@ -248,4 +248,15 @@ public class ApiClient {
         }
         return new ArrayList<>();
     }
+    public void deleteUser(String token, Long id) throws IOException {
+        Call<ResponseBody> call = api.deleteUser(token,id);
+
+        Response<ResponseBody> response = call.execute();
+
+        if (response.isSuccessful()) {
+
+        } else {
+            throw new IllegalStateException("Błąd podczas usuwania usera. Kod odpowiedzi HTTP: " + response.code());
+        }
+    }
 }

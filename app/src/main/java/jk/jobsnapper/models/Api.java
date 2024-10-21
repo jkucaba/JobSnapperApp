@@ -4,6 +4,7 @@ package jk.jobsnapper.models;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -24,4 +25,7 @@ public interface Api {
 
     @GET("/admin/users")
     Call<ResponseBody> getUsers(@Header("Authorization") String token);
+
+    @DELETE("admin/users/{id}")
+    Call<ResponseBody> deleteUser(@Header("Authorization") String token, @Path("id") Long id);
 }
