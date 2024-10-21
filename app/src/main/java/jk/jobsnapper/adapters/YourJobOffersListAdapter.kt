@@ -7,11 +7,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import jk.jobsnapper.R
 import jk.jobsnapper.databinding.CellJobOfferEmployerBinding
+import jk.jobsnapper.databinding.CellYourJobOfferBinding
 import jk.jobsnapper.models.JobOffer
 
-class JobOffersListAdapter(private val jobOffersList: ArrayList<JobOffer>, private val activity: Activity) : RecyclerView.Adapter<JobOffersListAdapter.JobOffersListViewHolder>() {
+class YourJobOffersListAdapter(private val jobOffersList: ArrayList<JobOffer>, private val activity: Activity) : RecyclerView.Adapter<YourJobOffersListAdapter.JobOffersListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): JobOffersListViewHolder {
-        val view = CellJobOfferEmployerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = CellYourJobOfferBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return JobOffersListViewHolder(view)
     }
 
@@ -24,7 +25,7 @@ class JobOffersListAdapter(private val jobOffersList: ArrayList<JobOffer>, priva
         return jobOffersList.size
     }
 
-    inner class JobOffersListViewHolder(private val itemBinding: CellJobOfferEmployerBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    inner class JobOffersListViewHolder(private val itemBinding: CellYourJobOfferBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(jobOffer: JobOffer) {
             itemBinding.titleTextView.text = jobOffer.title
@@ -35,6 +36,7 @@ class JobOffersListAdapter(private val jobOffersList: ArrayList<JobOffer>, priva
             itemBinding.phoneTextView.text = jobOffer.phoneNumber.toString()
 
             val ratio = jobOffer.acceptedApplicants.toFloat() / jobOffer.peopleRequired
+
             val redColor = ContextCompat.getColor(activity, R.color.red)
             val greenColor = ContextCompat.getColor(activity, R.color.green)
 

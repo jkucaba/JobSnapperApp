@@ -221,7 +221,9 @@ class AddJobOfferFragment : Fragment() {
                             jobCategory,
                             "Pending",
                             "$firstName $lastName",
-                             date
+                             date,
+                            0,
+                            0
                         )
 
                         try {

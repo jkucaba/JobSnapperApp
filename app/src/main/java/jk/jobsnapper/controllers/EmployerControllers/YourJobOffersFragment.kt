@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import jk.jobsnapper.adapters.JobOffersListAdapter
+import jk.jobsnapper.adapters.YourJobOffersListAdapter
 import jk.jobsnapper.databinding.FragmentYourJobOffersBinding
 import jk.jobsnapper.models.Model
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ class YourJobOffersFragment : Fragment() {
             withContext(Dispatchers.IO) {
                 val jobOffers = Model.getInstanceWC().getYourJobOffersL()
                 activity?.runOnUiThread {
-                    val adapter = JobOffersListAdapter(jobOffers, requireActivity())
+                    val adapter = YourJobOffersListAdapter(jobOffers, requireActivity())
                     binding.recyclerView.adapter = adapter
                 }
             }

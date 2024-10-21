@@ -15,11 +15,13 @@ public class JobOffer {
     private String status;
     private String postedBy;
     private String postedDate;
+    private int applicantsNumber;
+    private int acceptedApplicants;
 
     public JobOffer(Long idoffer, Long idUser, String title, String description, String location,
                     String startDate, String endDate, int peopleRequired, String salary,
                     int phone, String jobCategory, String jobStatus, String jobPostedBy,
-                    String jobPostedDate) {
+                    String jobPostedDate, int applicantsNumber, int acceptedApplicants) {
         this.idoffer = idoffer;
         this.idUser = idUser;
         this.title = title;
@@ -34,6 +36,8 @@ public class JobOffer {
         this.status = jobStatus;
         this.postedBy = jobPostedBy;
         this.postedDate = jobPostedDate;
+        this.applicantsNumber = applicantsNumber;
+        this.acceptedApplicants = acceptedApplicants;
     }
 
     public Long getIdoffer() {
@@ -148,6 +152,22 @@ public class JobOffer {
         this.postedDate = postedDate;
     }
 
+    public int getAcceptedApplicants() {
+        return acceptedApplicants;
+    }
+
+    public void setAcceptedApplicants(int acceptedApplicants) {
+        this.acceptedApplicants = acceptedApplicants;
+    }
+
+    public int getApplicantsNumber() {
+        return applicantsNumber;
+    }
+
+    public void setApplicantsNumber(int applicantsNumber) {
+        this.applicantsNumber = applicantsNumber;
+    }
+
     @Override
     public String toString() {
         return "JobOffer{" +
@@ -165,6 +185,8 @@ public class JobOffer {
                 ", status='" + status + '\'' +
                 ", postedBy='" + postedBy + '\'' +
                 ", postedDate='" + postedDate + '\'' +
+                ", applicantsNumber=" + applicantsNumber +
+                ", acceptedApplicants=" + acceptedApplicants +
                 '}';
     }
 }
