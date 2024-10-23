@@ -6,15 +6,20 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.ResponseBody;
@@ -168,6 +173,66 @@ public class ApiClient {
                 .getBody();
         return claims.get("birthday", String.class);
     }
+    public String getSexFromToken(String token) throws Exception {
+        byte[] publicBytes = Base64.decode(publicKey, Base64.DEFAULT);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+        Claims claims =  Jwts.parser()
+                .setSigningKey(publicKey)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("sex", String.class);
+    }
+    public String getPhoneFromToken(String token) throws Exception {
+        byte[] publicBytes = Base64.decode(publicKey, Base64.DEFAULT);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+        Claims claims =  Jwts.parser()
+                .setSigningKey(publicKey)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("phone", String.class);
+    }
+    public String getAbilitiesFromToken(String token) throws Exception {
+        byte[] publicBytes = Base64.decode(publicKey, Base64.DEFAULT);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+        Claims claims =  Jwts.parser()
+                .setSigningKey(publicKey)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("abilities", String.class);
+    }
+    public String getProfileFromToken(String token) throws Exception {
+        byte[] publicBytes = Base64.decode(publicKey, Base64.DEFAULT);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+        Claims claims =  Jwts.parser()
+                .setSigningKey(publicKey)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("profile", String.class);
+    }
+    public String getProfileImageFromToken(String token) throws Exception {
+        byte[] publicBytes = Base64.decode(publicKey, Base64.DEFAULT);
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+
+        Claims claims =  Jwts.parser()
+                .setSigningKey(publicKey)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("profile_image", String.class);
+    }
 
     public ResponseBody createJobOffer(JobOffer jobOffer, String token) throws IOException {
         Call<ResponseBody> call = api.createJobOffer(token, jobOffer);
@@ -257,6 +322,28 @@ public class ApiClient {
 
         } else {
             throw new IllegalStateException("Błąd podczas usuwania usera. Kod odpowiedzi HTTP: " + response.code());
+        }
+    }
+
+    public void uploadProfileImage(Long userId, MultipartBody.Part file, String token) throws IOException {
+        Call<ResponseBody> call = api.uploadProfileImage(userId, file, token);
+        Response<ResponseBody> response = call.execute();
+
+        if (!response.isSuccessful()) {
+            throw new IllegalStateException("Failed to upload profile image. HTTP response code: " + response.code());
+        }
+    }
+
+    public byte[] getProfileImage(Long userId, String token) throws IOException {
+        Call<ResponseBody> call = api.getProfileImage(userId, token);
+        Response<ResponseBody> response = call.execute();
+
+        if (response.isSuccessful()) {
+            return response.body().bytes();
+        } else if (response.code() == 403 || response.code() == 404) {
+            return null;
+        } else {
+            throw new IllegalStateException("Failed to fetch profile image. HTTP response code: " + response.code());
         }
     }
 }

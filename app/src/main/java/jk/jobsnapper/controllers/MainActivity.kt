@@ -60,27 +60,52 @@ class MainActivity : AppCompatActivity() {
                 val jwt = apiClient.login(loginRequest)
                 Model.getInstanceWC().token = jwt
                 apiClient.getPublicKey()
+
+                apiClient.setToken(jwt)
+                val role = apiClient.getUserRoleFromToken(jwt)
+                val idUser = apiClient.getIdUserFromToken(jwt)
+                val firstName = apiClient.getFirstNameFromToken(jwt)
+                val lastName = apiClient.getLastNameFromToken(jwt)
+                val email = apiClient.getEmailFromToken(jwt)
+                val birthDate = apiClient.getBirthDateFromToken(jwt)
+                val sex = apiClient.getSexFromToken(jwt)
+                val phoneNumber = apiClient.getPhoneFromToken(jwt).toInt()
+                val abilities = apiClient.getAbilitiesFromToken(jwt)
+                val profile = apiClient.getProfileFromToken(jwt)
+                val profileImage = Model.getInstanceWC().fetchProfileImage(idUser)
+
+                val user = User(idUser, firstName, lastName, email, birthDate, role, sex, phoneNumber, abilities, profile, profileImage)
+
+                Model.getInstanceWC().user = user
+
                 withContext(Dispatchers.Main) {
-                    apiClient.setToken(jwt)
                     Toast.makeText(this@MainActivity, "Zalogowano pomyślnie", Toast.LENGTH_SHORT)
                         .show()
-                    val role = apiClient.getUserRoleFromToken(jwt)
-                    val idUser = apiClient.getIdUserFromToken(jwt)
-                    val firstName = apiClient.getFirstNameFromToken(jwt)
-                    val lastName = apiClient.getLastNameFromToken(jwt)
-                    val email = apiClient.getEmailFromToken(jwt)
-                    val birthDate = apiClient.getBirthDateFromToken(jwt)
-
-                    val user = User(idUser, firstName, lastName, email, birthDate, role)
-
-                    Model.getInstanceWC().user = user
-
                     when (role) {
-                        "admin" -> startActivity(Intent(this@MainActivity, AdminActivity::class.java))
-                        "pracownik" -> startActivity(Intent(this@MainActivity, EmployeeActivity::class.java))
-                        "employer" -> startActivity(Intent(this@MainActivity, EmployerActivity::class.java))
+                        "admin" -> startActivity(
+                            Intent(
+                                this@MainActivity,
+                                AdminActivity::class.java
+                            )
+                        )
+
+                        "pracownik" -> startActivity(
+                            Intent(
+                                this@MainActivity,
+                                EmployeeActivity::class.java
+                            )
+                        )
+
+                        "employer" -> startActivity(
+                            Intent(
+                                this@MainActivity,
+                                EmployerActivity::class.java
+                            )
+                        )
                     }
                 }
+
+
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.e("MainActivity", "Błąd podczas logowania", e)

@@ -1,10 +1,13 @@
 package jk.jobsnapper.models;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import okhttp3.MultipartBody;
 
 public class Model {
     private static Model model;
@@ -76,6 +79,17 @@ public class Model {
     }
     public void deleteUserM(Long id) throws IllegalStateException,IOException {
         apiClient.deleteUser(token, id);
+    }
+    public void uploadProfileImage(Long userId, MultipartBody.Part file) throws IOException {
+        apiClient.uploadProfileImage(userId, file, token);
+    }
+    public byte[] fetchProfileImage(Long userId) {
+        try {
+            return apiClient.getProfileImage(userId, token);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
